@@ -18,7 +18,7 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 |---|---|---|---|
 | 1 Prueba MCP | Electric (E-Piano MKI Mellow) | Am F C G | Un acorde por compás, 4 compases |
 | 2 Drums R&B | 808 Core Kit | R&B 808 | Bombo en 1 y "y" del 2, caja+aplauso en 2 y 4, hats en semicorcheas, hat abierto al final |
-| 3 Bajo | Electric Damped Bass | Bajo simple | 17 notas: fundamentales con el acorde, quinta corta, B de paso al final |
+| 3 Bajo | Electric Damped Bass | Bajo simple | 12 notas: solo fundamentales con el acorde, en 1, "y" del 2 y 4 de cada compás |
 
 | 4 Guitarra riff | Tension Clean Basic Guitar + Amp (Clean, Gain 0.3) + Cabinet + Chorus-Ensemble | Riff punteo | 20 notas, mismo ritmo por compás (corcheas desde el "y" del 1, nota larga en el "y" del 2): Mi-Sol-La / Fa-La-Do / Mi-Sol-Do / Sol-Si-Re |
 
@@ -47,3 +47,5 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 - `preparar-grabacion`: pistas armadas para la Scarlett 2i2 (guitarra DI, criolla o voz con AT2020), niveles y cadena de monitoreo.
 - `mezcla-rapida`: gain staging, EQ y compresión por pista, buses y efectos de envío.
 - `master-y-export`: cadena de master a -14 LUFS y guía de export.
+
+**2026-10-16:** al bajo se le sacaron las notas de paso cortas (menos de medio tiempo). Con el preset damped sonaban como un clic y no como una nota. Regla: con bajos damped, nada de notas de menos de ~0.9 tiempos.

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<title>Cadenas Waves de voz y guitarra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: patchbay. Arriba se elige la cadena; debajo, la ruta de señal como fila de módulos y el detalle de cada módulo como ficha de ajustes. */
+:root {
+  --bg: #f3f2ee;
+  --panel: #ffffff;
+  --fg: #1d1f1c;
+  --muted: #5f6359;
+  --line: #dcdcd3;
+  --accent: #b5650d;
+  --accent-soft: #f4e3cc;
+  --chip: #e8e7e0;
+  --send: #3d6b73;
+  --send-soft: #dde9ea;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161714; --panel: #1f201c; --fg: #ecebe4; --muted: #a3a698;
+    --line: #34362f; --accent: #f0a04b; --accent-soft: #3a2b18; --chip: #2a2c26;
+    --send: #7fbcc6; --send-soft: #1d3135;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161714; --panel: #1f201c; --fg: #ecebe4; --muted: #a3a698;
+  --line: #34362f; --accent: #f0a04b; --accent-soft: #3a2b18; --chip: #2a2c26;
+  --send: #7fbcc6; --send-soft: #1d3135;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 64px; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.05; margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
+.intro { margin: 0; color: var(--muted); max-width: 66ch; }
+
+.picker { margin-top: 26px; display: grid; gap: 14px; }
+.group-label { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 14px; padding: 7px 13px; border-radius: 999px; border: 1px solid transparent; background: var(--chip); color: var(--fg); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+.chip:focus-visible, .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.chain { margin-top: 30px; border-top: 2px solid var(--fg); padding-top: 20px; }
+.chain-head { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; justify-content: space-between; }
+.chain-head h2 { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 3.6vw, 32px); margin: 0; line-height: 1.1; text-wrap: balance; }
+.chain-head .src { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.chain .desc { max-width: 68ch; margin: 12px 0 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { font: inherit; font-size: 13px; padding: 6px 12px; border: 0; background: var(--panel); color: var(--fg); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.seg-wrap { display: grid; gap: 4px; justify-items: start; }
+.seg-wrap span { font-size: 12px; color: var(--muted); }
+
+.flow { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; }
+.mod { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; display: grid; gap: 1px; min-width: 0; }
+.mod b { font-size: 14px; }
+.mod small { font-size: 12px; color: var(--muted); }
+.mod.io { background: transparent; border-style: dashed; }
+.mod.send { border-color: var(--send); background: var(--send-soft); }
+.arrow { align-self: center; color: var(--muted); font-family: var(--mono); }
+.flow-note { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+
+.steps { margin-top: 26px; display: grid; gap: 14px; }
+.step { display: grid; grid-template-columns: 2.4em minmax(0, 1fr); gap: 0 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.step .num { font-family: var(--mono); font-size: 13px; color: var(--accent); padding-top: 3px; }
+.step.send .num { color: var(--send); }
+.step h3 { margin: 0; font-size: 17px; font-weight: 600; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.step h3 .role { font-weight: 400; font-size: 14px; color: var(--muted); }
+.params { margin: 8px 0 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 16px; font-size: 14px; }
+.params dt { color: var(--muted); }
+.params dd { margin: 0; font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.step .note { margin: 8px 0 0; font-size: 13.5px; color: var(--muted); max-width: 70ch; }
+.sub { font-family: var(--display); font-weight: 600; font-size: 18px; margin: 30px 0 0; }
+.tips { margin: 10px 0 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch; }
+
+.basics { margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px 28px; }
+.basics h3 { font-family: var(--display); font-weight: 600; font-size: 17px; margin: 0 0 4px; }
+.basics p { margin: 0; color: var(--muted); font-size: 14px; }
+@media (max-width: 520px) { .params { grid-template-columns: minmax(0, 1fr); gap: 0; } .params dd { margin-bottom: 6px; } }
+</style>
+
+<div class="wrap">
+  <h1>Cadenas Waves de voz y guitarra</h1>
+  <p class="intro">Ocho cadenas armadas solo con tus plugins de Waves V14. Cada una muestra el orden de los plugins y un punto de partida para cada ajuste. Los valores son para empezar: después hay que ajustarlos a oído según tu voz, tu guitarra y la canción.</p>
+
+  <div class="picker">
+    <div>
+      <div class="group-label">Voces</div>
+      <div class="chips" id="chips-voz" role="group" aria-label="Cadenas de voz"></div>
+    </div>
+    <div>
+      <div class="group-label">Guitarras</div>
+      <div class="chips" id="chips-gtr" role="group" aria-label="Cadenas de guitarra"></div>
+    </div>
+  </div>
+
+  <article class="chain" id="chain"></article>
+
+  <div class="basics">
+    <div><h3>Nivel de entrada</h3><p>Grabá con picos entre −12 y −8 dBFS (promedio cerca de −18). Los plugins que emulan hardware están calibrados para ese nivel; si entra más fuerte, comprimen y saturan de más.</p></div>
+    <div><h3>Inserts y returns</h3><p>Los módulos naranjas van en la pista, en ese orden. Los azules van en pistas de retorno (Return A, B…) con Mix al 100 %, y desde la pista mandás el send que haga falta.</p></div>
+    <div><h3>Guardar la cadena</h3><p>Cargá todo dentro de un <b>StudioRack</b> de Waves y guardalo como preset. Así abrís la cadena completa con un clic en cualquier proyecto.</p></div>
+    <div><h3>Compresores 1176</h3><p>En el CLA-76, Attack y Release van de 1 a 7 y el número más alto es el más rápido. Attack 3 es medio-lento; Release 7 es el más rápido.</p></div>
+  </div>
+</div>
+
+<script>
+// Un valor puede ser un texto o [masculina, femenina].
+const CHAINS = [
+{
+  id: "calida", group: "voz", name: "Voz cálida", src: "Voz microfoneada · R&B, soul, acústico, balada",
+  desc: "Voz cercana, redonda y con cuerpo. Compresión óptica suave, EQ de válvulas y un toque de cinta para que suene analógica sin perder claridad.",
+  steps: [
+    { p: "Scheps 73", role: "preamp y EQ de color", set: [
+      ["Line/Mic gain", "hasta que el promedio quede cerca de −18 dBFS"],
+      ["HPF", ["80 Hz", "80 Hz (160 Hz si la voz retumba)"]],
+      ["Low shelf", ["110 Hz · +2 dB", "220 Hz · +1,5 dB"]],
+      ["Mid", ["3,2 kHz · +1,5 dB", "4,8 kHz · +1 dB"]],
+      ["High shelf", "12 kHz · +2 dB"]
+    ], note: "El preamp ya da algo de saturación. Si la voz suena opaca, subí el Mid antes que el High shelf." },
+    { p: "CLA-2A", role: "compresión óptica suave", set: [
+      ["Modo", "Compress"],
+      ["Peak Reduction", "hasta 3–5 dB de reducción en las frases fuertes"],
+      ["Gain", "compensar hasta igualar el volumen con el bypass"]
+    ], note: "Es lento y musical. Emparejar el nivel es su trabajo; los picos rápidos los controla el resto de la mezcla." },
+    { p: "DeEsser", role: "controla las eses", set: [
+      ["Freq", ["5,5 kHz", "7 kHz"]],
+      ["Modo", "Split"],
+      ["Threshold", "hasta 3–4 dB de reducción solo en las eses"]
+    ], note: "Va después del compresor porque la compresión realza las sibilancias. Activá el monitor del sidechain para encontrar la frecuencia exacta." },
+    { p: "PuigTec EQP-1A", role: "brillo y cuerpo suaves", set: [
+      ["Low CPS", "100 Hz"],
+      ["Low Boost / Atten", ["Boost 2 · Atten 1", "Boost 1 · Atten 1"]],
+      ["High Boost", "10 kHz · 3 · Bandwidth ancho (7–8)"],
+      ["High Atten", "20 kHz · 2"]
+    ], note: "Subir y bajar los graves a la vez es el truco clásico del Pultec: da cuerpo y limpia el barro al mismo tiempo." },
+    { p: "J37", role: "cinta, densidad", set: [
+      ["Tape formula", "888"],
+      ["Speed", "15 ips"],
+      ["Saturation", "baja, hasta notar más densidad"],
+      ["Noise / Wow / Flutter", "apagados"]
+    ] }
+  ],
+  sends: [
+    { p: "Abbey Road Plates", role: "Return A · reverb de placa", set: [
+      ["Decay", "1,8–2,2 s"], ["Pre-delay", "30–40 ms"], ["Mix", "100 %"], ["Send desde la voz", "−15 a −20 dB"]
+    ], note: "Si suena metálica, agregá un Q10 después en el return: HPF 200 Hz y LPF 8 kHz." },
+    { p: "H-Delay", role: "Return B · eco", set: [
+      ["Delay", "1/4 sincronizado"], ["Feedback", "20 %"], ["HiPass / LoPass", "300 Hz / 4 kHz"], ["Analog", "2"], ["Mix", "100 %"]
+    ] }
+  ],
+  tips: ["Para más intimidad, bajá el send de la reverb y subí apenas el del delay.", "En coros, usá la misma cadena con el HPF un escalón más alto."]
+},
+{
+  id: "fresca", group: "voz", name: "Voz fresca", src: "Voz microfoneada · pop moderno, indie, urbano melódico",
+  desc: "Voz brillante, adelante y con aire. Dos compresores en serie (rápido y lento) y un realce de agudos limpio.",
+  steps: [
+    { p: "F6", role: "limpieza dinámica", set: [
+      ["HPF", ["90 Hz", "120 Hz"]],
+      ["Banda 2 · dinámica", ["300 Hz · Q 1,5 · hasta −3 dB", "350 Hz · Q 1,5 · hasta −3 dB"]],
+      ["Banda 4 · dinámica", ["3 kHz · Q 2 · hasta −2 dB", "3,5 kHz · Q 2 · hasta −2 dB"]]
+    ], note: "Las bandas dinámicas cortan solo cuando la voz se pone encajonada o chillona. El resto del tiempo no tocan nada." },
+    { p: "CLA-76", role: "control de picos rápido", set: [
+      ["Versión", "Bluey (más limpia)"],
+      ["Ratio", "4"],
+      ["Attack / Release", "3 / 7"],
+      ["Input", "hasta 3–5 dB de reducción en los picos"],
+      ["Output", "compensar"]
+    ] },
+    { p: "CLA-2A", role: "nivelado lento", set: [
+      ["Modo", "Compress"],
+      ["Peak Reduction", "2–3 dB de reducción"],
+      ["Gain", "compensar"]
+    ], note: "El 76 agarra los picos y el 2A empareja. Entre los dos la voz queda estable sin sonar aplastada." },
+    { p: "Sibilance", role: "de-esser transparente", set: [
+      ["Threshold", "hasta 3–5 dB de reducción en las eses"]
+    ] },
+    { p: "PuigTec EQP-1A", role: "aire", set: [
+      ["Low", "sin tocar"],
+      ["High Boost", ["12 kHz · 4 · ancho", "16 kHz · 3 · ancho"]]
+    ] },
+    { p: "Vitamin", role: "brillo armónico", set: [
+      ["Banda alta", "+2 a +3"],
+      ["Resto de bandas", "0"],
+      ["Stereo width", "sin tocar (la voz principal va mono)"]
+    ] }
+  ],
+  sends: [
+    { p: "H-Reverb", role: "Return A · placa corta", set: [
+      ["Time", "1,2–1,5 s"], ["Pre-delay", "20 ms"], ["Mix", "100 %"]
+    ] },
+    { p: "H-Delay", role: "Return B · eco estéreo", set: [
+      ["Delay", "1/8 punteado"], ["Ping Pong", "activado"], ["Feedback", "15 %"], ["HiPass / LoPass", "400 Hz / 5 kHz"], ["Mix", "100 %"]
+    ] },
+    { p: "Doubler", role: "Return C · solo para coros", set: [
+      ["Voces", "2"], ["Detune", "±8 cents"], ["Delay", "10–20 ms"], ["Pan", "izquierda / derecha"]
+    ] }
+  ],
+  tips: ["Si la voz suena fina, bajá el HPF y el PuigTec antes de tocar los compresores."]
+},
+{
+  id: "trap-tune", group: "voz", name: "Trap · autotune marcado", src: "Voz microfoneada · trap, reggaetón, hip-hop melódico",
+  desc: "El efecto robótico del trap: afinación instantánea, compresión agresiva, algo de distorsión y aire arriba.",
+  steps: [
+    { p: "Waves Tune Real-Time", role: "afinación con efecto", set: [
+      ["Key / Scale", "la tonalidad exacta de la canción (clave)"],
+      ["Speed", "0–5 ms (lo más rápido)"],
+      ["Note Transition", "mínimo"],
+      ["Formant Correction", "activado"],
+      ["Vibrato", "0"]
+    ], note: "Si la escala está mal, el efecto mete notas falsas. Confirmá la tonalidad del beat antes de grabar. Siempre va primero en la cadena." },
+    { p: "F6", role: "limpieza", set: [
+      ["HPF", ["100 Hz", "130 Hz"]],
+      ["Banda 2 · dinámica", "250 Hz · hasta −3 dB"],
+      ["Banda 4 · dinámica", "3,5 kHz · hasta −2 dB"]
+    ] },
+    { p: "CLA-76", role: "compresión agresiva", set: [
+      ["Versión", "Blacky (más color)"],
+      ["Ratio", "8 (All para más agresividad)"],
+      ["Attack / Release", "4 / 6"],
+      ["Input", "hasta 6–8 dB de reducción"]
+    ] },
+    { p: "Sibilance", role: "de-esser", set: [
+      ["Threshold", "hasta 4–6 dB en las eses (el autotune las endurece)"]
+    ] },
+    { p: "OKDriver", role: "distorsión leve", set: [
+      ["Control", "20–30 %"]
+    ], note: "Da actitud y ayuda a que la voz corte sobre el 808. Si se nota la distorsión como tal, bajalo." },
+    { p: "PuigTec EQP-1A", role: "aire", set: [
+      ["High Boost", "16 kHz · 4 · ancho"]
+    ] }
+  ],
+  sends: [
+    { p: "H-Delay", role: "Return A · delay throws", set: [
+      ["Delay", "1/4 (o 1/8 punteado)"], ["Feedback", "25 %"], ["HiPass / LoPass", "500 Hz / 3,5 kHz"], ["Mix", "100 %"]
+    ], note: "Automatizá el send para que solo suene en la última palabra de cada frase." },
+    { p: "H-Reverb", role: "Return B · reverb oscura", set: [
+      ["Time", "1,5–2 s"], ["Damping de agudos", "alto"], ["Mix", "100 %"], ["Send", "bajo; apenas se tiene que notar"]
+    ] }
+  ],
+  tips: ["Ad-libs: misma cadena y después Lofi Space o OKFilter. Paneá cada ad-lib alternando izquierda y derecha.", "Doblajes del estribillo: grabalos de verdad y paneá 80/80; quedan mejor que con Doubler."]
+},
+{
+  id: "rap-natural", group: "voz", name: "Rap · afinación natural", src: "Voz microfoneada · rap, boom bap, trap sin efecto",
+  desc: "Voz seca, clara y al frente. La afinación corrige sin que se escuche y la compresión mantiene cada palabra entendible.",
+  steps: [
+    { p: "Waves Tune Real-Time", role: "corrección discreta", set: [
+      ["Key / Scale", "la tonalidad de la canción"],
+      ["Speed", "25–40 ms"],
+      ["Note Transition", "100–120 ms"],
+      ["Formant Correction", "activado"]
+    ], note: "En rap muy hablado podés apagarlo o dejarlo solo en las partes cantadas." },
+    { p: "F6", role: "limpieza", set: [
+      ["HPF", ["90 Hz", "120 Hz"]],
+      ["Banda 2 · dinámica", "250–300 Hz · hasta −3 dB"]
+    ] },
+    { p: "C6", role: "control del efecto de proximidad", set: [
+      ["Banda baja", "150–250 Hz · 2–3 dB de reducción"],
+      ["Resto", "sin tocar"]
+    ], note: "Cuando te acercás al micrófono los graves crecen. Esta banda los frena solo en esos momentos." },
+    { p: "CLA-76", role: "pegada", set: [
+      ["Versión", "Bluey"], ["Ratio", "4"], ["Attack / Release", "3 / 7"], ["Input", "4–5 dB de reducción"]
+    ] },
+    { p: "CLA-2A", role: "nivelado", set: [
+      ["Modo", "Compress"], ["Peak Reduction", "2 dB de reducción"]
+    ] },
+    { p: "Sibilance", role: "de-esser", set: [
+      ["Threshold", "3–5 dB de reducción en las eses"]
+    ] },
+    { p: "PuigTec EQP-1A", role: "presencia y aire", set: [
+      ["High Boost", ["10 kHz · 2 · ancho", "12 kHz · 2 · ancho"]]
+    ] }
+  ],
+  sends: [
+    { p: "H-Delay", role: "Return A · slap corto", set: [
+      ["Delay", "1/16 o 90–120 ms"], ["Feedback", "0–10 %"], ["LoPass", "4 kHz"], ["Mix", "100 %"], ["Send", "bajo; da profundidad sin que se note"]
+    ] },
+    { p: "H-Reverb", role: "Return B · sala corta", set: [
+      ["Time", "0,6–0,9 s"], ["Mix", "100 %"], ["Send", "muy bajo"]
+    ] }
+  ],
+  tips: ["En rap la voz suele ir bastante seca. Si dudás, menos reverb."]
+},
+{
+  id: "reggae", group: "gtr", name: "Guitarra reggae", src: "Eléctrica directa (DI) · skank / chop",
+  desc: "El skank clásico: limpio, brillante, corto y fuera del rango del bajo. Se toca en los tiempos 2 y 4, apagando con la mano izquierda.",
+  steps: [
+    { p: "C1", role: "gate, corta el ruido entre golpes", set: [
+      ["Modo", "Gate"], ["Threshold", "justo por encima del ruido de la guitarra"], ["Release", "30–50 ms"]
+    ] },
+    { p: "GTRAmp", role: "amplificador limpio", set: [
+      ["Amp", "limpio americano (estilo Fender)"], ["Gain", "2–3"], ["Bass / Mid / Treble", "3 / 5 / 7"], ["Cab", "2×12 abierto"], ["Mic", "dinámico, al borde del cono"]
+    ], note: "Tocá con la pastilla del medio o del puente y el tono abierto." },
+    { p: "Q10", role: "deja lugar al bajo", set: [
+      ["HPF", "200–250 Hz"], ["Banda", "2,5 kHz · +2 dB"], ["LPF", "9 kHz"]
+    ], note: "Queda fina sola, pero en la mezcla con el bajo reggae es justo lo que tiene que ser." },
+    { p: "CLA-76", role: "golpe parejo", set: [
+      ["Ratio", "4"], ["Attack / Release", "3 / 7"], ["Input", "3–4 dB de reducción"]
+    ] }
+  ],
+  sends: [
+    { p: "Abbey Road Plates", role: "Return A · placa corta", set: [
+      ["Decay", "1 s"], ["Mix", "100 %"]
+    ] },
+    { p: "H-Delay", role: "Return B · eco dub", set: [
+      ["Delay", "1/8 punteado"], ["Feedback", "30 %"], ["LoPass", "2,5 kHz"], ["Analog", "3"], ["Mix", "100 %"]
+    ], note: "Para momentos dub, automatizá el send en un acorde suelto y dejá que las repeticiones se apaguen." }
+  ],
+  tips: ["Paneá el skank unos 30 % hacia un lado y el órgano (bubble) hacia el otro."]
+},
+{
+  id: "bossa", group: "gtr", name: "Guitarra bossa nova", src: "Criolla/española microfoneada · cuerdas de nylon",
+  desc: "Sonido íntimo y cálido de nylon, con definición en las cuerdas y sin el retumbe de la caja.",
+  steps: [
+    { p: "InPhase", role: "solo si usás dos micrófonos", set: [
+      ["Uso", "alineá el segundo micrófono con el primero"]
+    ], note: "Micrófono: condensador a 20–30 cm, apuntando donde el mástil se une al cuerpo (trastes 12–14), no a la boca." },
+    { p: "Q10", role: "forma del sonido", set: [
+      ["HPF", "70–80 Hz"], ["Banda", "200–250 Hz · −3 dB · Q 1,2 (retumbe de la caja)"], ["Banda", "3–5 kHz · +1,5 dB (definición del nylon)"], ["High shelf", "10–12 kHz · +1,5 dB"]
+    ] },
+    { p: "CLA-2A", role: "compresión suave", set: [
+      ["Modo", "Compress"], ["Peak Reduction", "2–3 dB de reducción"]
+    ], note: "La bossa vive de la dinámica del pulgar y los acordes; no la aplastes." },
+    { p: "DeEsser", role: "opcional, chirridos de dedos", set: [
+      ["Freq", "4–6 kHz"], ["Threshold", "1–2 dB de reducción, solo si molestan"]
+    ] }
+  ],
+  sends: [
+    { p: "Abbey Road Chambers", role: "Return A · cámara", set: [
+      ["Tiempo", "1–1,4 s"], ["Pre-delay", "20 ms"], ["Mix", "100 %"], ["Send", "bajo"]
+    ], note: "Alternativa: TrueVerb con sala chica." }
+  ],
+  tips: ["Si la guitarra acompaña voz, bajá 1 dB más en 2–3 kHz para que no compita con ella."]
+},
+{
+  id: "rock", group: "gtr", name: "Guitarra rock", src: "Eléctrica directa (DI) · crunch y rítmica",
+  desc: "Guitarra con cuerpo y mordida. Un overdrive empuja el amplificador para que la distorsión quede apretada.",
+  steps: [
+    { p: "MDMX Distortion", role: "Screamer como booster", set: [
+      ["Modelo", "Screamer"], ["Drive", "2–3 (bajo)"], ["Tone", "6"], ["Level", "8"], ["Gate", "activado"]
+    ], note: "No distorsiona mucho por sí solo: aprieta los graves y empuja al amp." },
+    { p: "PRS Supermodels", role: "amplificador", set: [
+      ["Amp", "Dallas para crunch · Archon para alta ganancia"], ["Gain", "5–6 crunch · 7 rítmica pesada"], ["Bass / Mid / Treble", "5 / 6 / 6"], ["Presence", "5"], ["Cab / Mic", "4×12 · dinámico al borde del cono"]
+    ], note: "Alternativa: GTRAmp con un amp británico." },
+    { p: "Q10", role: "limpieza", set: [
+      ["HPF", "80–100 Hz"], ["Banda", "400 Hz · −2 a −3 dB · Q 1,5 (lodo)"], ["Banda", "2,5–3 kHz · +1,5 dB"], ["LPF", "9–10 kHz"]
+    ] }
+  ],
+  sends: [
+    { p: "H-Reverb", role: "Return A · sala", set: [
+      ["Time", "0,8–1,2 s"], ["Mix", "100 %"], ["Send", "bajo"]
+    ] },
+    { p: "H-Delay", role: "Return B · slap para solos", set: [
+      ["Delay", "90–120 ms"], ["Feedback", "0 %"], ["Mix", "100 %"]
+    ] }
+  ],
+  tips: ["Grabá la rítmica dos veces y paneá 100 % izquierda y 100 % derecha. Suena mucho más grande que una sola toma.", "La distorsión ya comprime: no hace falta compresor."]
+},
+{
+  id: "jazz", group: "gtr", name: "Guitarra jazz", src: "Eléctrica directa (DI) · comping y melodía",
+  desc: "Sonido redondo, oscuro y suave, con ataque blando. Pastilla del mástil y el tono bajado en la guitarra.",
+  steps: [
+    { p: "GTRAmp", role: "limpio cálido", set: [
+      ["Amp", "limpio americano"], ["Gain", "2"], ["Bass / Mid / Treble", "6 / 5 / 3–4"], ["Cab", "1×12 o 2×12"]
+    ], note: "En la guitarra: pastilla del mástil y tono entre 4 y 6." },
+    { p: "PuigTec EQP-1A", role: "redondez", set: [
+      ["Low", "100 Hz · Boost 1,5"], ["High Atten", "10 kHz · 3"]
+    ] },
+    { p: "CLA-2A", role: "nivelado", set: [
+      ["Modo", "Compress"], ["Peak Reduction", "2–3 dB de reducción"]
+    ] },
+    { p: "KramerTape", role: "calidez de cinta", set: [
+      ["Record level", "bajo"], ["Speed", "15 ips"], ["Delay", "apagado"]
+    ] }
+  ],
+  sends: [
+    { p: "Abbey Road Chambers", role: "Return A · cámara", set: [
+      ["Tiempo", "1,2–1,6 s"], ["Mix", "100 %"], ["Send", "bajo"]
+    ], note: "Alternativa: TrueVerb con sala mediana." }
+  ],
+  tips: ["Para solos, subí 1 dB en 1,5–2 kHz con un Q10 y la melodía se va a escuchar mejor."]
+}
+];
+
+const els = { voz: document.getElementById("chips-voz"), gtr: document.getElementById("chips-gtr"), chain: document.getElementById("chain") };
+let current = "calida";
+let voice = 0; // 0 masculina, 1 femenina
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const val = v => Array.isArray(v) ? v[voice] : v;
+const hasVoiceVariants = c => [...c.steps, ...c.sends].some(s => s.set.some(([, v]) => Array.isArray(v)));
+
+try { const saved = JSON.parse(localStorage.getItem("cadenas-waves") || "null"); if (saved) { current = saved.c || current; voice = saved.v || 0; } } catch (e) {}
+if (location.hash && CHAINS.some(c => c.id === location.hash.slice(1))) current = location.hash.slice(1);
+
+function save() { try { localStorage.setItem("cadenas-waves", JSON.stringify({ c: current, v: voice })); } catch (e) {} }
+
+function chips() {
+  ["voz", "gtr"].forEach(g => {
+    els[g].innerHTML = CHAINS.filter(c => c.group === g).map(c =>
+      `<button class="chip" type="button" data-id="${c.id}" aria-pressed="${c.id === current}">${esc(c.name)}</button>`).join("");
+  });
+}
+
+function stepHTML(s, i, isSend) {
+  return `<div class="step${isSend ? " send" : ""}">
+    <span class="num">${isSend ? "R" + (i + 1) : String(i + 1).padStart(2, "0")}</span>
+    <div>
+      <h3>${esc(s.p)} <span class="role">${esc(s.role)}</span></h3>
+      <dl class="params">${s.set.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(val(v))}</dd>`).join("")}</dl>
+      ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}
+    </div></div>`;
+}
+
+function render() {
+  const c = CHAINS.find(x => x.id === current) || CHAINS[0];
+  const variants = hasVoiceVariants(c);
+  const flow = [`<div class="mod io"><b>${c.group === "voz" ? "Micrófono" : "Guitarra"}</b><small>entrada</small></div>`]
+    .concat(c.steps.map(s => `<div class="mod"><b>${esc(s.p)}</b><small>${esc(s.role)}</small></div>`))
+    .join('<span class="arrow" aria-hidden="true">→</span>');
+  els.chain.innerHTML = `
+    <div class="chain-head">
+      <div><h2>${esc(c.name)}</h2><div class="src">${esc(c.src)}</div></div>
+      ${variants ? `<div class="seg-wrap"><span>Valores para voz</span><div class="seg" role="group" aria-label="Tipo de voz">
+        <button type="button" data-v="0" aria-pressed="${voice === 0}">Masculina</button>
+        <button type="button" data-v="1" aria-pressed="${voice === 1}">Femenina</button></div></div>` : ""}
+    </div>
+    <p class="desc">${esc(c.desc)}</p>
+    <div class="flow" aria-label="Orden de los plugins">${flow}</div>
+    <div class="flow" aria-label="Pistas de retorno">${c.sends.map(s => `<div class="mod send"><b>${esc(s.p)}</b><small>${esc(s.role)}</small></div>`).join("")}</div>
+    <p class="flow-note">Fila de arriba: inserts en la pista, en este orden. Fila de abajo: pistas de retorno.</p>
+    <h3 class="sub">Inserts</h3>
+    <div class="steps">${c.steps.map((s, i) => stepHTML(s, i, false)).join("")}</div>
+    <h3 class="sub">Pistas de retorno</h3>
+    <div class="steps">${c.sends.map((s, i) => stepHTML(s, i, true)).join("")}</div>
+    ${c.tips && c.tips.length ? `<h3 class="sub">Consejos</h3><ul class="tips">${c.tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}`;
+}
+
+document.querySelector(".picker").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  current = b.dataset.id; save(); chips(); render();
+});
+els.chain.addEventListener("click", e => {
+  const b = e.target.closest(".seg button"); if (!b) return;
+  voice = Number(b.dataset.v); save(); render();
+});
+chips(); render();
+</script>
+
+</html>

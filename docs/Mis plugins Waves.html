@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<title>Mis plugins Waves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una consola de estudio. Barra de búsqueda y filtros fija arriba; abajo, secciones por tipo de procesador con filas tipo "canal". */
+:root {
+  --bg: #f3f2ee;
+  --panel: #ffffff;
+  --fg: #1d1f1c;
+  --muted: #5f6359;
+  --line: #dcdcd3;
+  --accent: #b5650d;     /* aguja de VU */
+  --accent-soft: #f4e3cc;
+  --chip: #e8e7e0;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161714; --panel: #1f201c; --fg: #ecebe4; --muted: #a3a698;
+    --line: #34362f; --accent: #f0a04b; --accent-soft: #3a2b18; --chip: #2a2c26;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161714; --panel: #1f201c; --fg: #ecebe4; --muted: #a3a698;
+  --line: #34362f; --accent: #f0a04b; --accent-soft: #3a2b18; --chip: #2a2c26;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 64px; }
+header h1 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.05; margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
+header p { margin: 0; color: var(--muted); max-width: 64ch; }
+header .meta { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin-top: 14px; }
+header .meta b { color: var(--accent); font-weight: 500; }
+
+.controls { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 14px 12px; margin-top: 24px; border-bottom: 1px solid var(--line); display: grid; gap: 10px; }
+#q { width: 100%; font: inherit; font-size: 16px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--fg); }
+#q:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 13px; padding: 5px 11px; border-radius: 999px; border: 1px solid transparent; background: var(--chip); color: var(--fg); cursor: pointer; display: inline-flex; gap: 6px; align-items: baseline; }
+.chip .n { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.chip[aria-pressed="true"] .n { color: var(--accent); }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+section { margin-top: 34px; }
+section h2 { font-family: var(--display); font-weight: 600; font-size: 21px; margin: 0 0 4px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+section h2 .n { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 400; }
+section .lede { color: var(--muted); margin: 0 0 12px; font-size: 14px; max-width: 70ch; }
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); border-top: 1px solid var(--line); }
+.row { padding: 11px 14px 12px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; min-width: 0; }
+.row .name { font-weight: 600; font-size: 15px; }
+.row .desc { color: var(--muted); font-size: 14px; }
+.row .tag { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.03em; text-transform: uppercase; }
+.empty { margin-top: 40px; color: var(--muted); }
+footer { margin-top: 48px; font-size: 13px; color: var(--muted); max-width: 72ch; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Mis plugins Waves</h1>
+    <p>Para qué sirve cada plugin de Waves V14 instalado en esta PC, agrupado por tipo de procesador. Cuando un plugin emula un equipo de hardware, la etiqueta naranja dice cuál.</p>
+    <div class="meta">Origen: C:\Program Files (x86)\Waves\Plug-Ins V14 · <b id="total"></b> plugins · revisado el 15/10/2026</div>
+  </header>
+
+  <div class="controls">
+    <label for="q" hidden>Buscar plugin</label>
+    <input id="q" type="search" placeholder="Buscar por nombre o uso: voz, 1176, reverb, graves…" autocomplete="off">
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por tipo"></div>
+  </div>
+
+  <main id="out"></main>
+  <p class="empty" id="empty" hidden>No hay plugins que coincidan. Probá con otra palabra o elegí «Todos».</p>
+
+  <footer>Las descripciones resumen el uso principal de cada plugin. En unos pocos casos (marcados con «verificar») la información es aproximada y conviene abrir el plugin para confirmarlo.</footer>
+</div>
+
+<script>
+const CATS = {
+  dyn:   ["Compresores y dinámica", "Controlan el rango dinámico: emparejan niveles, dan pegada o pegan un grupo de pistas."],
+  eq:    ["Ecualizadores y filtros", "Dan forma al timbre cortando o realzando frecuencias."],
+  ch:    ["Channel strips y consolas", "Un canal completo de consola (preamp, EQ, compresor) en un solo plugin."],
+  sat:   ["Saturación, cinta y color", "Agregan armónicos, calidez o suciedad analógica."],
+  rev:   ["Reverb y delay", "Crean espacio, profundidad y ecos."],
+  mod:   ["Modulación y efectos creativos", "Chorus, flanger, filtros en movimiento, lo-fi y efectos especiales."],
+  knob:  ["One Knob (un solo control)", "Efectos de un solo control, rápidos para probar ideas."],
+  vox:   ["Voz: afinación, de-esser y riders", "Herramientas pensadas específicamente para voces."],
+  sig:   ["Cadenas firma de ingenieros", "Cadenas de proceso diseñadas por ingenieros conocidos, con pocos controles orientados al resultado."],
+  lim:   ["Limitadores y mastering", "Último paso de la mezcla: volumen final y control de picos."],
+  bass:  ["Graves y subgraves", "Refuerzan, generan o alinean las frecuencias graves."],
+  st:    ["Imagen estéreo y fase", "Ancho estéreo, mid/side y alineación de fase."],
+  inst:  ["Instrumentos virtuales", "Sintetizadores, sampler, pianos y bajos que se tocan por MIDI."],
+  gtr:   ["Guitarra", "Simuladores de amplificadores, pedales y afinador."],
+  rest:  ["Restauración y limpieza", "Quitan ruido, clics, zumbidos, respiraciones o acople."],
+  mon:   ["Monitoreo en auriculares", "Simulan escuchar en una sala de mezcla real con auriculares."],
+  meter: ["Medición y análisis", "Medidores de nivel, loudness y fase."],
+  util:  ["Utilidades y racks", "Hosts de cadenas, generadores de señal y herramientas para sonido en vivo."],
+  sur:   ["Surround e inmersivo", "Versiones para 5.1, Atmos y otros formatos multicanal. Para música en estéreo casi no se usan."]
+};
+
+// [nombre, categoría, descripción, hardware emulado (opcional)]
+const P = [
+["API-2500","dyn","Compresor de bus estéreo. Muy usado para pegar el bus de batería o la mezcla entera.","API 2500"],
+["API-550","eq","EQ de 3 bandas con pasos fijos; suena musical y con carácter en batería y guitarras.","API 550A / 550B"],
+["API-560","eq","EQ gráfico de 10 bandas, rápido para cortes y realces amplios.","API 560"],
+["AR TG Meter Bridge","meter","Puente de medidores VU y PPM con el estilo de las consolas de Abbey Road.",""],
+["ARPlates","rev","Reverb de placa, brillante y densa; clásica para voces y caja.","Placas EMT de Abbey Road"],
+["Abbey Road Chambers","rev","Reverb de cámara de eco con el circuito STEED de los años 60.","Cámaras de Abbey Road"],
+["Abbey Road RS124","dyn","Compresor suave y musical, muy usado en bajos y voces de los Beatles.","Altec RS124 modificado"],
+["Abbey Road Saturator","sat","Saturación multibanda basada en los circuitos de la consola TG y la cinta J37.",""],
+["Abbey Road Studio 3","mon","Hace sonar los auriculares como la sala de control Studio 3 de Abbey Road.",""],
+["Abbey Road TG Mastering Chain","lim","Cadena completa de mastering: EQ, compresor, limitador y ancho estéreo.","Consola de mastering EMI TG12410"],
+["Abbey Road Vinyl","mod","Simula el corte y la reproducción de un disco de vinilo, con ruido y crujidos.",""],
+["Aphex AX","sat","Excitador aural: agrega brillo y presencia sin subir volumen.","Aphex Aural Exciter"],
+["AudioTrack","ch","Canal simple con EQ, compresor y gate. Bueno para empezar.",""],
+["B360","sur","Panner Ambisonics para mezclas surround.",""],
+["BB Tubes","sat","Saturación de válvulas para buses y mezcla; suma calidez y densidad.",""],
+["Bass Fingers","inst","Bajo eléctrico tocado con dedos, sampleado.",""],
+["Bass Rider","vox","Ajusta automáticamente el volumen del bajo para que se mantenga parejo.",""],
+["Bass Slapper","inst","Bajo eléctrico con técnica slap, sampleado.",""],
+["Berzerk Distortion","sat","Distorsión con varios modos, de sutil a destructiva. Va bien en sintes y batería.",""],
+["Brauer Motion","mod","Panner automático que mueve el sonido en el estéreo con ritmo.",""],
+["Butch Vig Vocals","sig","Cadena vocal de Butch Vig (Nirvana, Garbage).",""],
+["C1","dyn","Compresor, gate y expansor con sidechain. Simple y transparente.",""],
+["C360","sur","Compresor para mezclas surround.",""],
+["C4","dyn","Compresor multibanda de 4 bandas; controla zonas de frecuencia por separado.",""],
+["C6","dyn","Compresor multibanda de 6 bandas (4 fijas + 2 flotantes). Excelente para voces problemáticas.",""],
+["CLA Bass","sig","Cadena de bajo de Chris Lord-Alge con faders para graves, cuerpo, saturación y más.",""],
+["CLA Drums","sig","Cadena de batería de Chris Lord-Alge.",""],
+["CLA EchoSphere","rev","Delay y reverb combinados, pensados por Chris Lord-Alge.",""],
+["CLA Effects","sig","Efectos de Chris Lord-Alge: delays, reverbs, chorus y doblaje en un plugin.",""],
+["CLA Epic","rev","Delays y reverbs grandes y cinematográficos de Chris Lord-Alge.",""],
+["CLA Guitars","sig","Cadena de guitarra de Chris Lord-Alge.",""],
+["CLA MixDown","sig","Proceso para el bus de mezcla de Chris Lord-Alge: compresión, color y graves/agudos.",""],
+["CLA MixHub","ch","Consola completa con agrupación de canales, al estilo de la SSL de Chris Lord-Alge.","SSL 4000 E"],
+["CLA Nx","mon","Escuchá en auriculares como en la sala de mezcla de Chris Lord-Alge.",""],
+["CLA Unplugged","sig","Cadena de Chris Lord-Alge para instrumentos acústicos.",""],
+["CLA Vocals","sig","Cadena de voz de Chris Lord-Alge: compresión, EQ, reverb y delay con faders.",""],
+["CLA-2A","dyn","Compresor óptico suave. Clásico para voces y bajo.","Teletronix LA-2A"],
+["CLA-3A","dyn","Compresor óptico más rápido que el 2A; bueno en guitarras y voces.","UREI LA-3A"],
+["CLA-76","dyn","Compresor FET muy rápido y agresivo. Clásico en voces, bajo y batería.","UREI 1176"],
+["CODEX","inst","Sintetizador wavetable para pads, leads y bajos modernos.",""],
+["CR8 Sampler","inst","Sampler para cargar, cortar y tocar tus propios sonidos.",""],
+["Center","st","Separa y ajusta el centro y los laterales de una mezcla estéreo.",""],
+["Clarity Vx","rest","Saca ruido de fondo de voces con IA, con un control principal.",""],
+["Clarity Vx Pro","rest","Versión avanzada de Clarity Vx, con más control sobre la limpieza de la voz.",""],
+["Clavinet","inst","Clavinet virtual, el teclado funk clásico.","Hohner Clavinet"],
+["DPR-402","dyn","Compresor, limitador y de-esser de dos canales.","BSS DPR-402"],
+["DTS Neural DownMix","sur","Convierte mezclas surround a menos canales.",""],
+["DTS Neural Mono2Stereo","st","Convierte una señal mono en estéreo convincente.",""],
+["DTS Neural UpMix","sur","Convierte estéreo en surround.",""],
+["DeBreath","vox","Baja o elimina automáticamente las respiraciones de una voz.",""],
+["DeEsser","vox","De-esser clásico: controla las eses y sibilancias.",""],
+["Doppler","mod","Efecto Doppler: simula una fuente de sonido que pasa al lado.",""],
+["Dorrough","meter","Medidor de nivel Dorrough (pico y promedio a la vez).","Dorrough 40-A"],
+["Dorrough Surround 5.0","sur","Medidores Dorrough para 5.0.",""],
+["Dorrough Surround 5.1","sur","Medidores Dorrough para 5.1.",""],
+["Doubler","mod","Doblaje de voces o instrumentos para engordar y abrir en estéreo.",""],
+["Dugan Speech","util","Automezclador para varios micrófonos de diálogo (podcast, mesa redonda).",""],
+["EMO-D5","dyn","Compresor y gate simple de la línea eMotion.",""],
+["EMO-F2","eq","Filtros pasa-altos y pasa-bajos sencillos.",""],
+["EMO-Q4","eq","EQ paramétrico de 4 bandas sencillo.",""],
+["EddieKramer BA","sig","Cadena de bajo de Eddie Kramer (Hendrix, Led Zeppelin).",""],
+["EddieKramer DR","sig","Cadena de batería de Eddie Kramer.",""],
+["EddieKramer FX","sig","Efectos (delays, reverbs, flanger) de Eddie Kramer.",""],
+["EddieKramer GT","sig","Cadena de guitarra de Eddie Kramer.",""],
+["EddieKramer VC","sig","Cadena de voz de Eddie Kramer.",""],
+["Electric Grand 80","inst","Piano eléctrico de cola de los 80.","Yamaha CP-80"],
+["Electric200","inst","Piano eléctrico Wurlitzer.","Wurlitzer 200A"],
+["Electric88","inst","Piano eléctrico Rhodes.","Fender Rhodes"],
+["Element2","inst","Sintetizador analógico virtual; fácil de programar, ideal para bajos y leads.",""],
+["Enigma","mod","Efecto creativo de modulación con filtros, phaser y feedback para texturas raras.",""],
+["F6","eq","EQ dinámico de 6 bandas: corta o realza solo cuando hace falta.",""],
+["Flow Motion","inst","Sintetizador FM moderno.",""],
+["GEQ","eq","EQ gráfico de 30 bandas (clásico o moderno).",""],
+["GTRAmp","gtr","Simulador de amplificadores de guitarra.",""],
+["GTRSoloToolRack","gtr","Rack de guitarra simplificado (amp + pedales).",""],
+["GTRStomp","gtr","Pedales de efecto para guitarra.",""],
+["GTRToolRack","gtr","Rack completo de guitarra: amps, cajas y pedales.",""],
+["GTRTuner","gtr","Afinador de guitarra.",""],
+["GrandRhapsody","inst","Piano de cola acústico sampleado.",""],
+["Greg Wells MixCentric","sig","Un solo control para dar brillo, cuerpo y pegada al bus de mezcla.",""],
+["Greg Wells PianoCentric","sig","Un solo control para dar forma a pianos.",""],
+["Greg Wells ToneCentric","sig","Saturación y color de un solo control para cualquier pista.",""],
+["Greg Wells VoiceCentric","sig","Un solo control para voces: compresión, EQ, delay y reverb.",""],
+["H-Comp","dyn","Compresor híbrido con carácter analógico y control de mezcla paralela.",""],
+["H-Delay","rev","Delay híbrido analógico/digital con sincronía al tempo. Muy versátil.",""],
+["H-EQ","eq","EQ híbrido con curvas de varios equipos clásicos y analizador.",""],
+["H-Reverb","rev","Reverb algorítmica moderna con mucho control.",""],
+["IMPusher","dyn","Realzador de pegada y volumen de Infected Mushroom; útil en batería y bajos de electrónica.",""],
+["IR-1","rev","Reverb por convolución con respuestas de salas reales.",""],
+["IR-360","sur","Reverb por convolución para surround.",""],
+["IR-L","rev","Versión liviana de la reverb por convolución IR.",""],
+["IRLive","rev","Reverb por convolución optimizada para vivo (baja latencia).",""],
+["InPhase","st","Alinea la fase entre micrófonos (por ejemplo, bombo dentro y fuera).",""],
+["InPhase LT","st","Versión simple de InPhase.",""],
+["Insert","util","Envía y retorna audio a equipos externos (verificar).",""],
+["J37","sat","Grabadora de cinta de 4 pistas usada por los Beatles; saturación cálida.","Studer J37"],
+["JJP-Bass","sig","Cadena de bajo de Jack Joseph Puig.",""],
+["JJP-Cymb-Perc","sig","Cadena de platillos y percusión de Jack Joseph Puig.",""],
+["JJP-Drums","sig","Cadena de batería de Jack Joseph Puig.",""],
+["JJP-Guitars","sig","Cadena de guitarras de Jack Joseph Puig.",""],
+["JJP-Strings-Keys","sig","Cadena de cuerdas y teclados de Jack Joseph Puig.",""],
+["JJP-Vocals","sig","Cadena de voz de Jack Joseph Puig.",""],
+["Kaleidoscopes","mod","Efecto creativo de resonadores y filtros que convierte sonidos en texturas armónicas.",""],
+["KingsMic","ch","Modelado de micrófonos vintage de Abbey Road para cambiar el carácter de una voz (verificar).",""],
+["KramerHLS","ch","Canal de consola británica con EQ cálido.","Helios"],
+["KramerPIE","dyn","Compresor vintage británico.","Pye"],
+["KramerTape","sat","Grabadora de cinta con saturación, ruido y eco de cinta.","Ampex 350 (Eddie Kramer)"],
+["L1","lim","Limitador/maximizador clásico.",""],
+["L2","lim","Maximizador muy usado para subir el volumen final sin picos.",""],
+["L3 Multi","lim","Maximizador multibanda con control por banda.",""],
+["L3 Ultra","lim","Maximizador multibanda con controles simples.",""],
+["L3-16","lim","Maximizador multibanda de 16 bandas, transparente.",""],
+["L3-LL Multi","lim","Versión de baja latencia de L3 Multi.",""],
+["L3-LL Ultra","lim","Versión de baja latencia de L3 Ultra.",""],
+["L360","sur","Limitador para surround.",""],
+["LFE360","sur","Filtro del canal de subgraves (LFE) en surround.",""],
+["Lil Tube","sat","Saturación de válvula simple, con pocos controles.",""],
+["LinEQ","eq","EQ de fase lineal; preciso, ideal para mastering.",""],
+["LinMB","lim","Compresor multibanda de fase lineal para mastering.",""],
+["LoAir","bass","Genera subgraves debajo de la nota original.",""],
+["Lofi Space","rev","Reverb y delay lo-fi, sucios y con carácter.",""],
+["MDMX Distortion","sat","Tres distorsiones de pedal: overdrive, fuzz y screamer.",""],
+["MV2","dyn","Compresión hacia arriba y hacia abajo con dos faders. Saca detalles bajos y controla picos.",""],
+["MV360","sur","Versión surround de MV2.",""],
+["MagmaChannelStrip","ch","Canal de consola con EQ, compresor, gate y saturación.",""],
+["MannyM-Delay","sig","Delay de Manny Marroquin.",""],
+["MannyM-Distortion","sig","Distorsión de Manny Marroquin.",""],
+["MannyM-EQ","sig","EQ de Manny Marroquin.",""],
+["MannyM-Reverb","sig","Reverb de Manny Marroquin.",""],
+["MannyM-ToneShaper","sig","Moldeador de tono de Manny Marroquin (dinámica por bandas).",""],
+["MannyM-TripleD","sig","Distorsión, delay y modulación en uno, de Manny Marroquin.",""],
+["Maserati ACG","sig","Cadena de guitarra acústica de Tony Maserati.",""],
+["Maserati B72","sig","Cadena de bajo de Tony Maserati.",""],
+["Maserati DRM","sig","Cadena de batería de Tony Maserati.",""],
+["Maserati GRP","sig","Proceso para grupos o buses de Tony Maserati.",""],
+["Maserati GTi","sig","Cadena de guitarra eléctrica de Tony Maserati.",""],
+["Maserati HMX","sig","Ensanchador y armonizador de Tony Maserati.",""],
+["Maserati VX1","sig","Cadena de voz de Tony Maserati.",""],
+["MaxxBass","bass","Hace que los graves se perciban en parlantes chicos (agrega armónicos).",""],
+["MaxxVolume","dyn","Nivelador todo en uno: compresión, gate y ganancia automática.",""],
+["MetaFilter","mod","Filtros modulados y rítmicos para efectos creativos.",""],
+["MetaFlanger","mod","Flanger clásico.",""],
+["MondoMod","mod","Modulación de amplitud, frecuencia y paneo.",""],
+["Morphoder","mod","Vocoder: hace que un sinte hable con la voz.",""],
+["MultiMod Rack","mod","Rack de seis efectos de modulación tipo pedal.",""],
+["NLS","sat","Simula la suma de consolas SSL, Neve y EMI en el bus de mezcla.",""],
+["NS1","rest","Reductor de ruido de voz de un solo control.",""],
+["NX","mon","Simula una sala de mezcla en tus auriculares.",""],
+["Nx Germano Studios","mon","Escuchá en auriculares como en Germano Studios (Nueva York).",""],
+["Nx Ocean Way Nashville","mon","Escuchá en auriculares como en Ocean Way Nashville.",""],
+["OKBrighter","knob","Da brillo con un solo control.",""],
+["OKDriver","knob","Saturación y distorsión con un solo control.",""],
+["OKFilter","knob","Filtro con un solo control.",""],
+["OKLouder","knob","Sube el volumen percibido con un solo control.",""],
+["OKPhatter","knob","Engorda graves y cuerpo con un solo control.",""],
+["OKPressure","knob","Compresión con un solo control.",""],
+["OKPumper","knob","Efecto de bombeo tipo sidechain con un solo control.",""],
+["OKWetter","knob","Reverb con un solo control.",""],
+["OVox","mod","Resintetizador de voz: vocoder, armonías y efectos vocales sintéticos.",""],
+["PAZ","meter","Analizador de frecuencias, fase e imagen estéreo.",""],
+["PRS Supermodels","gtr","Simulador de amplificadores PRS.","Amps PRS"],
+["PS22","st","Crea estéreo a partir de una fuente mono.",""],
+["PlaylistRider","util","Nivela el volumen entre canciones de una lista de reproducción.",""],
+["Primary Source Expander","rest","Reduce el sonido de otros instrumentos que se cuela en un micrófono (vivo).",""],
+["PuigChild","dyn","Compresor de válvulas suave y grueso; clásico en buses y voces.","Fairchild 660 / 670"],
+["PuigTec","eq","EQ de válvulas para realzar graves y agudos con suavidad.","Pultec EQP-1A / MEQ-5"],
+["Q-Clone","eq","Copia la curva de un EQ de hardware y la aplica en el DAW.",""],
+["Q10","eq","EQ paramétrico de 10 bandas, quirúrgico.",""],
+["R360","sur","Reverb para surround.",""],
+["RBass","bass","Realce de graves psicoacústico, simple.",""],
+["RChannel","ch","Canal completo Renaissance: gate, compresor y EQ.",""],
+["RComp","dyn","Compresor Renaissance, versátil y suave.",""],
+["RDeEsser","vox","De-esser Renaissance.",""],
+["REDD17","ch","Consola de válvulas de los primeros discos de los Beatles.","EMI REDD.17"],
+["REDD37-51","ch","Consola de válvulas de Abbey Road de mediados de los 60.","EMI REDD.37 / .51"],
+["REQ","eq","EQ paramétrico Renaissance, cálido y musical.",""],
+["RS56","eq","EQ de mastering de 3 bandas de Abbey Road.","EMI RS56 Universal Tone Control"],
+["RVerb","rev","Reverb Renaissance, clásica y fácil.",""],
+["RVox","vox","Compresor de voz de un control, con gate y limitador.",""],
+["Reel ADT","mod","Doblaje automático de cinta (ADT), el efecto de doble voz de los Beatles.",""],
+["RenAxx","dyn","Compresor Renaissance pensado para guitarras.",""],
+["Retro Fi","mod","Degradación lo-fi: cinta vieja, vinilo, radio y bit crushing.",""],
+["S1","st","Ensanchador de imagen estéreo.",""],
+["S360","sur","Panner para surround.",""],
+["SSL E-Channel","ch","Canal de consola SSL serie E: EQ agresivo, compresor y gate.","SSL 4000 E"],
+["SSL EV2 Channel","ch","Canal SSL E con preamp y más opciones.","SSL 4000 E"],
+["SSL G-Channel","ch","Canal de consola SSL serie G, más limpio que el E.","SSL 4000 G"],
+["SSLComp","dyn","Compresor de bus SSL. El clásico «pegamento» de mezcla.","SSL G-Bus Compressor"],
+["SSLEQ","eq","EQ de la consola SSL.","SSL 4000 G"],
+["Saphira","sat","Saturación armónica con control de pares e impares.",""],
+["Scheps 73","ch","Preamp y EQ de consola Neve; da cuerpo y calidez.","Neve 1073"],
+["Scheps Omni Channel","ch","Canal modular: preamp, EQ, compresor, de-esser y gate, con sidechain.",""],
+["Scheps Parallel Particles","sig","Proceso paralelo de Andrew Scheps en cuatro controles: aire, cuerpo, mordida y grosor.",""],
+["Sibilance","vox","De-esser moderno y transparente.",""],
+["SignalGenerator","util","Genera tonos y ruido de prueba.",""],
+["Smack Attack","dyn","Moldeador de transitorios: más o menos ataque y sustain.",""],
+["SoundShifter","mod","Cambia la afinación o el tempo de forma independiente.",""],
+["Spherix Immersive Compressor","sur","Compresor para formatos inmersivos (Atmos).",""],
+["Spherix Immersive Limiter","sur","Limitador para formatos inmersivos (Atmos).",""],
+["StudioRack","util","Host de cadenas de plugins con paralelo y multibanda. Permite guardar cadenas completas.",""],
+["Sub Align","bass","Alinea la fase entre los subwoofers y el resto del sistema (vivo).",""],
+["Submarine","bass","Generador de subarmónicos para engordar bombos y bajos.",""],
+["SuperTap","rev","Delay multitap de hasta 6 repeticiones.",""],
+["TG12345","ch","Canal de la consola EMI TG de Abbey Road.","EMI TG12345"],
+["TRACT","util","Alineación y calibración de sistemas de sonido en vivo.",""],
+["Torque","mod","Cambia la afinación de tambores sin tocar el tempo.",""],
+["TransX","dyn","Moldeador de transitorios multibanda.",""],
+["TrueVerb","rev","Reverb de sala virtual, con primeras reflexiones y cola.",""],
+["UM","sur","Convierte estéreo en surround (UM225/UM226).",""],
+["UltraPitch","vox","Armonizador y cambio de afinación de hasta 6 voces.",""],
+["VComp","dyn","Compresor británico de diodo.","Neve 2254"],
+["VEQ3","eq","EQ británico de 3 bandas.","Neve 1066"],
+["VEQ4","eq","EQ británico de 4 bandas.","Neve 1081"],
+["VU Meter","meter","Medidor VU clásico.",""],
+["Vitamin","sat","Realzador armónico multibanda con control de ancho estéreo.",""],
+["Vocal Bender","vox","Cambia afinación y formantes de voz en tiempo real (efectos creativos).",""],
+["Vocal Rider","vox","Ajusta automáticamente el volumen de la voz frente a la pista.",""],
+["W43","rest","Reducción de ruido de diálogo.","Dolby CAT43"],
+["WLM","meter","Medidor de loudness (LUFS).",""],
+["WLM Plus","meter","Medidor de loudness con corrección de nivel.",""],
+["WNS","rest","Supresor de ruido de diálogo multibanda.",""],
+["Waves Harmony","vox","Armonizador vocal que genera hasta 8 voces de armonía.",""],
+["Waves Tune Real-Time","vox","Afinación de voz en tiempo real (efecto tipo autotune).",""],
+["WavesTune","vox","Afinación de voz gráfica, nota por nota.",""],
+["WavesTune LT","vox","Versión simple de WavesTune.",""],
+["X-Click","rest","Quita clics de grabaciones.",""],
+["X-Crackle","rest","Quita crujidos de vinilo.",""],
+["X-FDBK","rest","Detecta y elimina acople (feedback) en vivo.",""],
+["X-Hum","rest","Quita zumbidos de red eléctrica (50/60 Hz).",""],
+["X-Noise","rest","Reduce ruido de fondo de banda ancha.",""],
+["Z-Noise","rest","Reducción de ruido adaptativa, más avanzada.",""],
+["dbx-160","dyn","Compresor VCA duro y punchy; clásico en bombo y caja.","dbx 160"]
+];
+
+const order = Object.keys(CATS);
+const out = document.getElementById("out");
+const chips = document.getElementById("chips");
+const q = document.getElementById("q");
+const empty = document.getElementById("empty");
+document.getElementById("total").textContent = P.length;
+let active = "all";
+
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildChips() {
+  const counts = {};
+  P.forEach(p => counts[p[1]] = (counts[p[1]] || 0) + 1);
+  const items = [["all", "Todos", P.length]].concat(order.map(k => [k, CATS[k][0], counts[k] || 0]));
+  chips.innerHTML = items.map(([k, label, n]) =>
+    `<button class="chip" type="button" data-k="${k}" aria-pressed="${k === active}">${esc(label)} <span class="n">${n}</span></button>`
+  ).join("");
+}
+
+function render() {
+  const term = norm(q.value.trim());
+  let shown = 0;
+  out.innerHTML = order.filter(k => active === "all" || active === k).map(k => {
+    const rows = P.filter(p => p[1] === k)
+      .filter(p => !term || norm(p.join(" ") + " " + CATS[k][0]).includes(term))
+      .sort((a, b) => a[0].localeCompare(b[0], "es"));
+    if (!rows.length) return "";
+    shown += rows.length;
+    return `<section><h2>${esc(CATS[k][0])} <span class="n">${rows.length}</span></h2>
+      <p class="lede">${esc(CATS[k][1])}</p>
+      <div class="list">${rows.map(p => `<div class="row">
+        <span class="name">${esc(p[0])}</span>
+        ${p[3] ? `<span class="tag">${esc(p[3])}</span>` : ""}
+        <span class="desc">${esc(p[2])}</span></div>`).join("")}</div></section>`;
+  }).join("");
+  empty.hidden = shown > 0;
+}
+
+chips.addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  active = b.dataset.k;
+  chips.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.k === active));
+  render();
+});
+q.addEventListener("input", render);
+buildChips();
+render();
+</script>
+
+</html>

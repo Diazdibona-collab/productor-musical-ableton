@@ -20,7 +20,11 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 | 2 Drums R&B | 808 Core Kit | R&B 808 | Bombo en 1 y "y" del 2, caja+aplauso en 2 y 4, hats en semicorcheas, hat abierto al final |
 | 3 Bajo | Electric Damped Bass | Bajo simple | 17 notas: fundamentales con el acorde, quinta corta, B de paso al final |
 
-90 BPM, Am – F – C – G. Pistas 4 y 5 (audio) vacías.
+| 4 Guitarra riff | Tension Clean Basic Guitar + Amp (Clean, Gain 0.3) + Cabinet + Chorus-Ensemble | Riff punteo | 20 notas, mismo ritmo por compás (corcheas desde el "y" del 1, nota larga en el "y" del 2): Mi-Sol-La / Fa-La-Do / Mi-Sol-Do / Sol-Si-Re |
+
+90 BPM, Am – F – C – G. Pistas 5 y 6 (audio) vacías.
+
+**2026-10-16:** el usuario dijo que el bajo no coincide con los acordes del piano. Las notas están bien en el papel (verificado). Las sospechas son clips desfasados o un bajo demasiado grave para lo que escucha. Pidió no tocar más el bajo por ahora: retomarlo al afinar.
 
 1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si no lo guardó y Live se cerró, reconstruir a partir de la tabla de arriba.
 2. Confirmar que **volvió a ver la vista Session**: la última vez no lograba ver los clips (ver `docs/referencia-ableton.md`, problemas comunes).

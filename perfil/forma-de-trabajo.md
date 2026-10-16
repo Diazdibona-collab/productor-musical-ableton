@@ -4,6 +4,10 @@
 
 Proponer y confirmar: explicar el plan en pocas líneas, esperar el ok y después ejecutarlo completo.
 
+## Orden de trabajo
+
+Primero se arma **la base completa** (todos los instrumentos y patrones) y recién después se afina: patrones, sonidos, volúmenes y mezcla. Mientras se construye, no frenar en cada paso a preguntar por volumen o calidad de sonido; alcanza con confirmar que el elemento nuevo funciona musicalmente.
+
 ## Explicaciones
 
 Una o dos líneas del **porqué** de cada decisión de producción ("le corto graves a la guitarra para que no tape al bajo"), para que vaya aprendiendo. Nada de clases largas salvo que las pida. La teoría musical no hace falta explicarla.

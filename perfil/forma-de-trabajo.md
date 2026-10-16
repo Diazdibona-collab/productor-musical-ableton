@@ -40,3 +40,7 @@ Medir con un medidor de loudness instalado (por ejemplo TBProAudio dpMeter o Wav
 ## Prioridades
 
 Las cuatro áreas importan: armar la base, grabar guitarra y voz, mezclar, y masterizar y exportar. Son candidatas a convertirse en skills (ver `estado.md`).
+
+## Gustos musicales aprendidos
+
+- **Bajo:** prefiere líneas simples, con la fundamental cayendo junto con el acorde (sin anticipar el acorde siguiente) y algunas notas largas. Una línea funky muy cargada, con octavas, fantasmas y cromatismos, le resultó "demasiado juego" (2026-10-16).

@@ -12,7 +12,7 @@
 
 ## Próxima sesión: retomar la base R&B
 
-Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
+Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Session**, fila 1:
 
 | Pista | Instrumento | Clips | Contenido |
 |---|---|---|---|
@@ -33,9 +33,10 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 
 **2026-10-16:** al bajo se le sacaron las notas de paso cortas (menos de medio tiempo). Con el preset damped sonaban como un clic y no como una nota. Además, el damper de Tension hacía clic al soltar cada nota: se apagó `Damper On`. Regla: con bajos damped de Tension, apagar el damper y evitar notas muy cortas.
 
-1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si no lo guardó y Live se cerró, reconstruir a partir de la tabla de arriba.
-2. Confirmar que **volvió a ver la vista Session**: la última vez no lograba ver los clips (ver `docs/referencia-ableton.md`, problemas comunes).
-3. Seguir con el próximo elemento de la base: guitarra (grabada o MIDI), pad o melodía. Recién después afinar sonidos y patrones.
+1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si Live se cerró sin guardar, reconstruir con la tabla de arriba.
+2. Pedir feedback pendiente de la última ronda (2026-10-16): si la guitarra suena barítona y acompaña al Rhodes, si "Drums Lacy" se acerca a "The Feeling" (seca/sala/lo-fi) y si el Gate se come ghost notes o hats suaves.
+3. Bajo: confirmar si desapareció el clic con `Damper On` apagado y si las notas quedan embarradas.
+4. Base casi completa (batería, bajo, acordes, guitarra, melodía). Siguiente: afinar sonidos y patrones, decidir si se borra "Drums R&B" y pasar la reverb del Rhodes a un envío. Después, estructura de la canción en Arrangement.
 
 ## Pendiente
 

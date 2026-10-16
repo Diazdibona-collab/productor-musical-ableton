@@ -24,6 +24,8 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 
 90 BPM, Am – F – C – G. Pistas 5 y 6 (audio) vacías.
 
+**2026-10-16:** batería alternativa "R&B juguetón" en la pista 2, slot 2 (el "R&B 808" original sigue en el slot 1). Hats en corcheas con ráfagas, redobles en tresillo y fusas (compases 2 y 4), hat abierto en el "y" del 4 de los compases 2 y 4, bombo sincopado distinto en cada compás, ghost notes de caja y rim shots sueltos. Hats más cortos: se baja a mano el Length del Simpler del pad Closed Hi Hat (el MCP no llega a los parámetros dentro del Drum Rack).
+
 **2026-10-16:** el usuario dijo que el bajo no coincide con los acordes del piano. Las notas están bien en el papel (verificado). Las sospechas son clips desfasados o un bajo demasiado grave para lo que escucha. Pidió no tocar más el bajo por ahora: retomarlo al afinar.
 
 1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si no lo guardó y Live se cerró, reconstruir a partir de la tabla de arriba.

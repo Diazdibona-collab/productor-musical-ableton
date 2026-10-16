@@ -60,7 +60,9 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
 
 - **Bug del MCP:** `create_locator` crea el locator pero no le pone el nombre (queda con un número), falla de forma intermitente y hay que mandarlo de a uno, no en paralelo. Además, antes de poner clips no deja crear locators más allá del largo de la canción. Los nombres se ponen a mano (clic derecho en el locator → Renombrar).
 
-**Próximo paso:** escuchar la estructura y ajustarla (transiciones, fills, entradas). Pedir el feedback pendiente:
+- El usuario escuchó la estructura: el verso entra bien. Exportó una primera versión sin cadena de master.
+
+**Próximo paso:** armar la cadena de master (objetivo -14 LUFS y -1 dBTP) y ajustar la estructura (transiciones, fills, entradas). Pedir el feedback pendiente:
    - ¿"Groove Feeling" + "Bajo Feeling" se acercan a la referencia? ¿Cuánto arrastre de hats?
    - ¿Bajo y bombo suenan como un solo golpe?
    - ¿"Díadas tensión" (Rhodes que calla en Am) funciona, o se siente vacío?

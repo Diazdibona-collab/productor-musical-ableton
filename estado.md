@@ -20,7 +20,7 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 | 2 Drums R&B | 808 Core Kit | R&B 808 | Bombo en 1 y "y" del 2, caja+aplauso en 2 y 4, hats en semicorcheas, hat abierto al final |
 | 3 Bajo | Electric Damped Bass | Bajo simple | 12 notas: solo fundamentales con el acorde, en 1, "y" del 2 y 4 de cada compás. `Damper On` apagado (hacía clic al soltar cada nota) |
 | 4 Guitarra riff | Tension Clean Basic Guitar + Amp (Clean, Gain 0.3) + Cabinet + Chorus-Ensemble | Riff punteo | 20 notas, mismo ritmo por compás (corcheas desde el "y" del 1, nota larga en el "y" del 2): Mi-Sol-La / Fa-La-Do / Mi-Sol-Do / Sol-Si-Re |
-| 5 Piano melodía | Electric (E-Piano MKI Mellow) | Díadas | Díada en el 1 (3.ª+5.ª o fund.+3.ª), bordadura en el 3 (2.ª+4.ª o 7.ª+9.ª) y resolución en el "y" del 3. Voz superior Mi-La-Sol-Si |
+| 5 Piano melodía | Electric (E-Piano MKI Mellow) + Auto Pan (Amount 0.35, tremolo stereo) + Chorus-Ensemble (Dry/Wet 0.3, Warmth 0.3) + Saturator (Drive 3 dB, Dry/Wet 0.5) + ValhallaSupermassive (Mix 0.2, LowCut 0.15) | Díadas | Octava 4 (Do4 a Do5). Díada en el 1 (3.ª+5.ª o fund.+3.ª), bordadura en el 3 (2.ª+4.ª o 7.ª+9.ª) y resolución en el "y" del 3. Voz superior Mi-La-Sol-Si |
 
 90 BPM, Am – F – C – G. Pistas 6 y 7 (audio) vacías.
 

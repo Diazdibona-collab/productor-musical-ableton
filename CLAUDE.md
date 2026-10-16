@@ -19,6 +19,8 @@ Respondé siempre en español rioplatense (voseo), con acentos y ortografía cor
 - **Proponer y confirmar.** Antes de ejecutar, decir en pocas líneas qué vas a hacer en el set (pistas, clips, dispositivos, parámetros) y esperar el ok. Una vez aprobado un plan, sus pasos se ejecutan sin volver a preguntar por cada uno.
 - Nunca borrar ni sobrescribir clips, pistas o dispositivos existentes sin confirmación explícita para eso en particular.
 - Leer antes de tocar: `get_session_info` / `get_track_info` para ubicar índices reales, sin suponerlos.
+- Después de abrir o cambiar de set, la primera llamada puede fallar con `did not match C++ signature`. Reintentar una vez; si sigue fallando, desactivar y reactivar AbletonMCP en Superficie de Control.
+- `song_length` no indica que haya contenido (un set vacío da 232). Para saber si un set está vacío, revisar las pistas.
 - **Privacidad:** no usar nunca `submit_intent`, `rate_last_action`, `reject_last_action`, `prefer_candidate`, `record_audition` ni `set_dataset_consent` (salvo para negar el consentimiento). Dejar vacío el parámetro `user_prompt` de todas las herramientas.
 - No podés escuchar el audio. Después de cada cambio audible, seguí el protocolo de feedback de `perfil/forma-de-trabajo.md`.
 - El MCP no controla todo (por ejemplo, la ruta de entrada de una pista, el armado para grabar o el export). Para eso, dar las instrucciones exactas de qué tocar en Live.

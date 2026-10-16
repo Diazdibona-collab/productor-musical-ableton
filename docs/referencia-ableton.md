@@ -21,3 +21,4 @@ Los 16 pads siguen el mapa General MIDI a partir de C1 = 36. Verificado en el 80
 
 - 808 Core Kit: `query:Drums#FileId_4017`
 - Electric, preset E-Piano MKI Mellow: `query:Synths#Electric:Piano%20&%20Keys:FileId_5541`
+- Electric Damped Bass (bajo eléctrico con dedos, apagado): `query:Sounds#Bass:FileId_5026`

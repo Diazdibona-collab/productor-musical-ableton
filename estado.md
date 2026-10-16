@@ -8,6 +8,7 @@
   Repo público: https://github.com/Diazdibona-collab/productor-musical-ableton
 - **2026-10-16:** Control Surface AbletonMCP activado (Live en español: *Preferencias → Link, Tempo & MIDI → Superficie de Control*). Conexión OK (script 1.7.1) y el navegador ve los VST3 (Waves, Antares, Xfer, Valhalla, TDR, TBProAudio, Slate, Softube, Klanghelm, Steven Slate, Splice).
 - **2026-10-16:** primera prueba OK en un set vacío: 90 BPM, pista "Prueba MCP" con Electric (preset E-Piano MKI Mellow) y clip Am–F–C–G de 4 compases, reproducido.
+- **2026-10-16:** primera base R&B en curso (90 BPM, Am–F–C–G): piano Electric MKI Mellow, batería 808 Core Kit (clip "R&B 808") y bajo Electric Damped Bass con línea funky (clip "Bajo funky": octavas, notas fantasma, anticipaciones y cromatismos). Afinación de sonido y patrones: después de completar la base.
 
 ## Pendiente
 

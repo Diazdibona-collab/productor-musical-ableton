@@ -45,10 +45,16 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
 - **H-Reverb no abre en esta PC** (el usuario lo borró). En la guitarra se reemplazó por **ValhallaSupermassive** (Mix 0.3, Feedback 0.7, Density 0.3, LowCut 0.2, HighCut 0.6). Falta confirmar si H-Delay abre bien.
 - El Gate de la batería se borró porque entrecortaba el patrón. Hubo un malentendido: el usuario quería el preset "Short Gate" de **Valhalla Room**, con poco mix, para un sonido de grabación casera. **Valhalla Room no está instalado en esta PC** (solo Supermassive); ver si está en la otra.
 
-1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si Live se cerró sin guardar, reconstruir con la tabla de arriba.
-2. Pedir feedback pendiente de la última ronda (2026-10-16): si la guitarra suena barítona y acompaña al Rhodes, si "Drums Lacy" se acerca a "The Feeling" (seca/sala/lo-fi) y si el Gate se come ghost notes o hats suaves.
-3. Bajo: confirmar si desapareció el clic con `Damper On` apagado y si las notas quedan embarradas.
-4. Base casi completa (batería, bajo, acordes, guitarra, melodía). Siguiente: afinar sonidos y patrones, decidir si se borra "Drums R&B" y pasar la reverb del Rhodes a un envío. Después, estructura de la canción en Arrangement.
+**Próximo paso (pedido por el usuario el 2026-10-16): armar la estructura de la canción en Arrangement.**
+
+1. Leer el set (`get_session_info` y `get_track_info`), porque los índices cambiaron al borrar "Drums R&B".
+2. Pedir el feedback que quedó pendiente, idealmente antes de armar la estructura:
+   - ¿"Groove Feeling" + "Bajo Feeling" se acercan a la referencia? ¿Cuánto arrastre de hats?
+   - ¿Bajo y bombo suenan como un solo golpe?
+   - ¿"Díadas tensión" (Rhodes que calla en Am) funciona, o se siente vacío?
+   - ¿H-Delay abre bien en la guitarra? Si no, reemplazarlo por el Echo de Ableton.
+   - ¿La guitarra con Supermassive da atmósfera?
+3. Definir con el usuario qué clips usa cada sección (por ejemplo, intro solo con guitarra y Rhodes, verso con el groove nuevo, etc.) y armarla en Arrangement con `duplicate_to_arrangement` y locators.
 
 ## Pendiente
 

@@ -3,7 +3,7 @@
 ## 1. Clonar el repo
 
 ```powershell
-git clone https://github.com/<usuario>/<repo>.git
+git clone https://github.com/Diazdibona-collab/productor-musical-ableton.git
 ```
 
 Abrir Claude Code dentro de la carpeta clonada.

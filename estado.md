@@ -5,6 +5,7 @@
 - **2026-10-08:** instalado el MCP `ableton-mcp` (v1.4.5, github.com/ahujasid/ableton-mcp) con telemetría y dataset apagados, y el Remote Script v1.7.1. Auditoría de seguridad: coincide con el paquete oficial de PyPI y no tiene código malicioso. Ver `setup/ableton-mcp.md`.
 - **2026-10-15:** catálogo de plugins Waves y 8 cadenas de voz y guitarra (`docs/`).
 - **2026-10-16:** el repo pasa a ser el agente: perfil, forma de trabajo, inventario de plugins por PC y sincronización con GitHub.
+  Repo público: https://github.com/Diazdibona-collab/productor-musical-ableton
 
 ## Pendiente
 

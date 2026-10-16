@@ -33,6 +33,17 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
 
 **2026-10-16:** al bajo se le sacaron las notas de paso cortas (menos de medio tiempo). Con el preset damped sonaban como un clic y no como una nota. Además, el damper de Tension hacía clic al soltar cada nota: se apagó `Damper On`. Regla: con bajos damped de Tension, apagar el damper y evitar notas muy cortas.
 
+**2026-10-16 (tercera sesión):** el set está guardado. "Drums R&B" quedó borrada (a mano), así que los índices bajaron uno: 0 Prueba MCP, 1 Drums Lacy, 2 Bajo, 3 Guitarra riff, 4 Piano melodía, 5-6 audio.
+
+- **Tempo 86 BPM**, el de "The Feeling" según Tunebat, Hooktheory y Beatport. El estribillo de la referencia es vi7–IV–V–I en Mi♭ y, según las reseñas, tiene batería "crisp" y un bajo protagonista.
+- El usuario describe el groove así: bajo con pocas notas largas y sonido de bajo eléctrico, bombo junto con el bajo y hats arrastrados estilo J Dilla.
+- **Clips nuevos** en el slot 2 (no se borró nada):
+  - **"Groove Feeling"** (Drums Lacy): bombo en 1, "y" del 2 y la última semicorchea del 3. Swing a mano (+0,04 en la corchea del medio y +0,06 en las semicorcheas pares), caja 0,025 atrasada y algunas ghost notes.
+  - **"Bajo Feeling"**: 3 notas por compás clavadas al bombo, fundamental + fundamental + 5.ª.
+  - **"Díadas tensión"** (Rhodes): calla en Am; Mi+Si (7M y #11) en F que resuelve a Mi+Do; un Re suelto en C; Sol+Do (sus4) que resuelve a Sol+Si en G.
+- **Guitarra:** Chorus apagado (no borrado) y se sumaron **H-Delay Stereo** y **H-Reverb Stereo**. Los parámetros de Waves no le llegan al MCP (solo ve Device On): se configuran a mano.
+- El Gate de la batería se borró porque entrecortaba el patrón. Hubo un malentendido: el usuario quería el preset "Short Gate" de **Valhalla Room**, con poco mix, para un sonido de grabación casera. **Valhalla Room no está instalado en esta PC** (solo Supermassive); ver si está en la otra.
+
 1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si Live se cerró sin guardar, reconstruir con la tabla de arriba.
 2. Pedir feedback pendiente de la última ronda (2026-10-16): si la guitarra suena barítona y acompaña al Rhodes, si "Drums Lacy" se acerca a "The Feeling" (seca/sala/lo-fi) y si el Gate se come ghost notes o hats suaves.
 3. Bajo: confirmar si desapareció el clic con `Damper On` apagado y si las notas quedan embarradas.

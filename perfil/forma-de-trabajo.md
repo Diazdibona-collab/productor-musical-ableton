@@ -43,4 +43,5 @@ Las cuatro áreas importan: armar la base, grabar guitarra y voz, mezclar, y mas
 
 ## Gustos musicales aprendidos
 
+- **Reverbs:** prefiere una reverb distinta en cada instrumento (insertada en la pista) antes que una reverb compartida por envío. Le interesa jugar con la espacialidad de cada uno (2026-10-16).
 - **Bajo:** prefiere líneas simples, con la fundamental cayendo junto con el acorde (sin anticipar el acorde siguiente) y algunas notas largas. Una línea funky muy cargada, con octavas, fantasmas y cromatismos, le resultó "demasiado juego" (2026-10-16).

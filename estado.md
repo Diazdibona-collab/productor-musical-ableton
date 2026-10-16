@@ -62,7 +62,15 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
 
 - El usuario escuchó la estructura: el verso entra bien. Exportó una primera versión sin cadena de master.
 
-**Próximo paso:** armar la cadena de master (objetivo -14 LUFS y -1 dBTP) y ajustar la estructura (transiciones, fills, entradas). Pedir el feedback pendiente:
+- **2026-10-16, mezcla:** sobre la mezcla del usuario (Rhodes acordes 0 dB, batería +1, bajo -7, guitarra 0 a 20 L, díadas -3 a 20 R; el master ya tenía un H-EQ suyo) se agregaron:
+  - **Bajo:** Saturator (Soft Sine, Drive 4, Output -2, Dry/Wet 0.6) para que se escuche en parlantes chicos.
+  - **EQ Eight** con corte de graves de 12 dB/oct: guitarra a 90 Hz, Rhodes acordes a 120 Hz y díadas a 180 Hz.
+  - **Batería:** Glue Compressor (Ratio 2, Attack 10 ms, Release Auto, Threshold -12, Makeup 1).
+  - **A mano** (el MCP no mueve faders ni paneos): bajo a -5 dB, guitarra a 30 L y díadas a 30 R.
+  - EQ Eight: la frecuencia normalizada es f = 10 · 2200^x Hz. El MCP **no llega al Master**: sus dispositivos los carga y ajusta el usuario.
+- **Master** (lo arma el usuario a mano): H-EQ → Glue (Ratio 2, Attack 30 ms, Auto) → LAxLimit4 (techo -0,1 dB true peak, pedido del usuario) → dpMeter5, con objetivo de -14 LUFS integrados.
+
+**Próximo paso:** revisar las lecturas del master (objetivo -14 LUFS y -1 dBTP) y ajustar la estructura (transiciones, fills, entradas). Pedir el feedback pendiente:
    - ¿"Groove Feeling" + "Bajo Feeling" se acercan a la referencia? ¿Cuánto arrastre de hats?
    - ¿Bajo y bombo suenan como un solo golpe?
    - ¿"Díadas tensión" (Rhodes que calla en Am) funciona, o se siente vacío?

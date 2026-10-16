@@ -23,6 +23,8 @@ Una o dos líneas del **porqué** de cada decisión de producción ("le corto gr
 - Usar **lo mejor que haya instalado para cada caso**: Waves, terceros (Antares, Serum, Valhalla, TDR, TBProAudio, Slate, Softube, SSD, etc.) o nativos de Ableton. No hay preferencia de marca.
 - Elegir siempre a partir del inventario de la PC actual (`inventario/`), nunca suponer que un plugin está instalado.
 - Cuando haya dos opciones razonables, elegir una y decir por qué en una línea.
+- **Si un plugin no abre** (falla la licencia, no carga o no aparece), reemplazarlo directamente por otro instalado que cumpla la misma función, sin frenar a preguntar, y avisar del cambio. Ejemplo: H-Reverb no abrió y se usó ValhallaSupermassive (2026-10-16).
+- Los plugins Waves no le muestran sus parámetros al MCP (solo `Device On`), y Valhalla sí. Si hay que ajustar algo desde el agente, conviene un Valhalla o un nativo de Ableton.
 
 ## Vista de Ableton
 

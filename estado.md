@@ -42,6 +42,7 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
   - **"Bajo Feeling"**: 3 notas por compás clavadas al bombo, fundamental + fundamental + 5.ª.
   - **"Díadas tensión"** (Rhodes): calla en Am; Mi+Si (7M y #11) en F que resuelve a Mi+Do; un Re suelto en C; Sol+Do (sus4) que resuelve a Sol+Si en G.
 - **Guitarra:** Chorus apagado (no borrado) y se sumaron **H-Delay Stereo** y **H-Reverb Stereo**. Los parámetros de Waves no le llegan al MCP (solo ve Device On): se configuran a mano.
+- **H-Reverb no abre en esta PC** (el usuario lo borró). En la guitarra se reemplazó por **ValhallaSupermassive** (Mix 0.3, Feedback 0.7, Density 0.3, LowCut 0.2, HighCut 0.6). Falta confirmar si H-Delay abre bien.
 - El Gate de la batería se borró porque entrecortaba el patrón. Hubo un malentendido: el usuario quería el preset "Short Gate" de **Valhalla Room**, con poco mix, para un sonido de grabación casera. **Valhalla Room no está instalado en esta PC** (solo Supermassive); ver si está en la otra.
 
 1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si Live se cerró sin guardar, reconstruir con la tabla de arriba.

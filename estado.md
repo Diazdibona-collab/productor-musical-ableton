@@ -18,15 +18,17 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 |---|---|---|---|
 | 1 Prueba MCP | Electric (E-Piano MKI Mellow) | Am F C G | Un acorde por compás, 4 compases |
 | 2 Drums R&B | 808 Core Kit | R&B 808 | Bombo en 1 y "y" del 2, caja+aplauso en 2 y 4, hats en semicorcheas, hat abierto al final |
-| 3 Bajo | Electric Damped Bass | Bajo simple | 12 notas: solo fundamentales con el acorde, en 1, "y" del 2 y 4 de cada compás |
-
+| 3 Bajo | Electric Damped Bass | Bajo simple | 12 notas: solo fundamentales con el acorde, en 1, "y" del 2 y 4 de cada compás. `Damper On` apagado (hacía clic al soltar cada nota) |
 | 4 Guitarra riff | Tension Clean Basic Guitar + Amp (Clean, Gain 0.3) + Cabinet + Chorus-Ensemble | Riff punteo | 20 notas, mismo ritmo por compás (corcheas desde el "y" del 1, nota larga en el "y" del 2): Mi-Sol-La / Fa-La-Do / Mi-Sol-Do / Sol-Si-Re |
+| 5 Piano melodía | Electric (E-Piano MKI Mellow) | Díadas | Díada en el 1 (3.ª+5.ª o fund.+3.ª), bordadura en el 3 (2.ª+4.ª o 7.ª+9.ª) y resolución en el "y" del 3. Voz superior Mi-La-Sol-Si |
 
-90 BPM, Am – F – C – G. Pistas 5 y 6 (audio) vacías.
+90 BPM, Am – F – C – G. Pistas 6 y 7 (audio) vacías.
 
 **2026-10-16:** batería alternativa "R&B juguetón" en la pista 2, slot 2 (el "R&B 808" original sigue en el slot 1). Hats en corcheas con ráfagas, redobles en tresillo y fusas (compases 2 y 4), hat abierto en el "y" del 4 de los compases 2 y 4, bombo sincopado distinto en cada compás, ghost notes de caja y rim shots sueltos. Hats más cortos: se baja a mano el Length del Simpler del pad Closed Hi Hat (el MCP no llega a los parámetros dentro del Drum Rack).
 
 **2026-10-16:** el usuario dijo que el bajo no coincide con los acordes del piano. Las notas están bien en el papel (verificado). Las sospechas son clips desfasados o un bajo demasiado grave para lo que escucha. Pidió no tocar más el bajo por ahora: retomarlo al afinar.
+
+**2026-10-16:** al bajo se le sacaron las notas de paso cortas (menos de medio tiempo). Con el preset damped sonaban como un clic y no como una nota. Además, el damper de Tension hacía clic al soltar cada nota: se apagó `Damper On`. Regla: con bajos damped de Tension, apagar el damper y evitar notas muy cortas.
 
 1. Confirmar que el usuario **guardó el set** (`Ctrl + S`) y con qué nombre. Si no lo guardó y Live se cerró, reconstruir a partir de la tabla de arriba.
 2. Confirmar que **volvió a ver la vista Session**: la última vez no lograba ver los clips (ver `docs/referencia-ableton.md`, problemas comunes).
@@ -47,5 +49,3 @@ Estado del set al cerrar (2026-10-16), todo en la vista **Session**, fila 1:
 - `preparar-grabacion`: pistas armadas para la Scarlett 2i2 (guitarra DI, criolla o voz con AT2020), niveles y cadena de monitoreo.
 - `mezcla-rapida`: gain staging, EQ y compresión por pista, buses y efectos de envío.
 - `master-y-export`: cadena de master a -14 LUFS y guía de export.
-
-**2026-10-16:** al bajo se le sacaron las notas de paso cortas (menos de medio tiempo). Con el preset damped sonaban como un clic y no como una nota. Regla: con bajos damped, nada de notas de menos de ~0.9 tiempos.

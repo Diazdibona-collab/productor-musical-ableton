@@ -70,7 +70,14 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
   - EQ Eight: la frecuencia normalizada es f = 10 · 2200^x Hz. El MCP **no llega al Master**: sus dispositivos los carga y ajusta el usuario.
 - **Master** (lo arma el usuario a mano): H-EQ → Glue (Ratio 2, Attack 30 ms, Auto) → LAxLimit4 (techo -0,1 dB true peak, pedido del usuario) → dpMeter5, con objetivo de -14 LUFS integrados.
 
-**Próximo paso:** revisar las lecturas del master (objetivo -14 LUFS y -1 dBTP) y ajustar la estructura (transiciones, fills, entradas). Pedir el feedback pendiente:
+- **2026-10-16, cierre:** el usuario armó el master a mano y exportó la canción masterizada. No pasó las lecturas del dpMeter (LUFS integrados, true peak, compresión del limitador) ni contestó si el bajo saturado se escucha en el celular.
+
+**Próxima sesión:**
+1. Pedir las lecturas del master del export. Si la canción va a Spotify, proponer bajar el techo a -1 dBTP.
+2. Preguntar cómo suena el export fuera de los monitores (celular, auriculares, auto): ¿el bajo se escucha?, ¿algún instrumento tapa a otro?
+3. Renombrar los locators si no se hizo (Intro, Verso 1, Estribillo 1, Verso 2, Estribillo 2, Puente, Estribillo final, Outro).
+4. Ajustar la estructura (transiciones, fills, entradas) y, cuando haya letra, grabar la voz en los versos.
+5. Feedback que sigue pendiente:
    - ¿"Groove Feeling" + "Bajo Feeling" se acercan a la referencia? ¿Cuánto arrastre de hats?
    - ¿Bajo y bombo suenan como un solo golpe?
    - ¿"Díadas tensión" (Rhodes que calla en Am) funciona, o se siente vacío?

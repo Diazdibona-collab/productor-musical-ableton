@@ -45,16 +45,27 @@ Estado del set al cerrar (2026-10-16, segunda sesión), todo en la vista **Sessi
 - **H-Reverb no abre en esta PC** (el usuario lo borró). En la guitarra se reemplazó por **ValhallaSupermassive** (Mix 0.3, Feedback 0.7, Density 0.3, LowCut 0.2, HighCut 0.6). Falta confirmar si H-Delay abre bien.
 - El Gate de la batería se borró porque entrecortaba el patrón. Hubo un malentendido: el usuario quería el preset "Short Gate" de **Valhalla Room**, con poco mix, para un sonido de grabación casera. **Valhalla Room no está instalado en esta PC** (solo Supermassive); ver si está en la otra.
 
-**Próximo paso (pedido por el usuario el 2026-10-16): armar la estructura de la canción en Arrangement.**
+**2026-10-16 (cuarta sesión): estructura armada en Arrangement** (80 compases, unos 3:43 a 86 BPM). La pista "Prueba MCP" pasó a llamarse **"Rhodes acordes"**. En Session no se tocó nada.
 
-1. Leer el set (`get_session_info` y `get_track_info`), porque los índices cambiaron al borrar "Drums R&B".
-2. Pedir el feedback que quedó pendiente, idealmente antes de armar la estructura:
+| Sección | Compases (beat) | Batería | Bajo | Rhodes acordes | Rhodes díadas | Guitarra |
+|---|---|---|---|---|---|---|
+| Intro | 1–8 (0) | — | — | — | Díadas tensión | Barítona respuesta |
+| Verso 1 | 9–24 (32) | Groove Feeling | Bajo Feeling | — | Díadas tensión | solo compases 17–24 |
+| Estribillo 1 | 25–32 (96) | Groove Feeling | Bajo Feeling | Am F C G | Díadas | Barítona respuesta |
+| Verso 2 | 33–48 (128) | Groove Feeling | Bajo Feeling | — | Díadas tensión | Barítona respuesta |
+| Estribillo 2 | 49–56 (192) | Groove Feeling | Bajo Feeling | Am F C G | Díadas | Barítona respuesta |
+| Puente | 57–64 (224) | Lacy seco | Bajo simple | Am F C G | — | Riff punteo |
+| Estribillo final | 65–72 (256) | Groove Feeling | Bajo Feeling | Am F C G | Díadas | Barítona respuesta |
+| Outro | 73–80 (288) | — | Bajo simple (4 compases) | — | Díadas tensión | Barítona respuesta |
+
+- **Bug del MCP:** `create_locator` crea el locator pero no le pone el nombre (queda con un número), falla de forma intermitente y hay que mandarlo de a uno, no en paralelo. Además, antes de poner clips no deja crear locators más allá del largo de la canción. Los nombres se ponen a mano (clic derecho en el locator → Renombrar).
+
+**Próximo paso:** escuchar la estructura y ajustarla (transiciones, fills, entradas). Pedir el feedback pendiente:
    - ¿"Groove Feeling" + "Bajo Feeling" se acercan a la referencia? ¿Cuánto arrastre de hats?
    - ¿Bajo y bombo suenan como un solo golpe?
    - ¿"Díadas tensión" (Rhodes que calla en Am) funciona, o se siente vacío?
    - ¿H-Delay abre bien en la guitarra? Si no, reemplazarlo por el Echo de Ableton.
    - ¿La guitarra con Supermassive da atmósfera?
-3. Definir con el usuario qué clips usa cada sección (por ejemplo, intro solo con guitarra y Rhodes, verso con el groove nuevo, etc.) y armarla en Arrangement con `duplicate_to_arrangement` y locators.
 
 ## Pendiente
 

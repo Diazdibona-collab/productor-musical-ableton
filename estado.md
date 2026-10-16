@@ -13,7 +13,6 @@
 - [ ] Confirmar que el navegador del MCP ve los plugins VST3 (Waves y terceros).
 - [ ] Prueba simple: tempo, pista MIDI y clip.
 - [ ] Generar el inventario de la otra PC (`scripts/inventario-plugins.ps1`).
-- [ ] Completar los modelos de guitarras en `perfil/usuario.md`.
 - [ ] Revisar las cadenas de `docs/` ahora que no son solo Waves (por ejemplo, Auto-Tune para el trap y Valhalla para las reverbs).
 - [ ] Verificar los nombres de amps en PRS Supermodels (puse Dallas y Archon) y qué hacen Insert y KingsMic.
 

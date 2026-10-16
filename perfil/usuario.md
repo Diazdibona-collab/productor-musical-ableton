@@ -12,6 +12,8 @@
 - Micrófono: Audio-Technica AT2020 (condenser cardioide: necesita phantom +48 V en la 2i2), con brazo y antipop.
 - Amplificador de auriculares.
 - Monitores de estudio Yamaha.
-- Guitarras: eléctrica (se graba directa por DI con simulador de amp) y criolla/española (se graba con micrófono). Modelos: *pendiente de completar*.
+- Guitarras:
+  - **Epiphone Jeff Beck 1954 Les Paul (Oxblood)**: eléctrica con dos humbuckers. Se graba directa por la entrada INST (Hi-Z) de la 2i2, con simulador de amp en Live.
+  - **Guitarra española tradicional** (criolla, cuerdas de nylon): se graba con la AT2020.
 
 La otra PC tiene lo mismo y algunos plugins más. Ver su inventario en `inventario/`.
